@@ -51,3 +51,10 @@ jobs:
         cmakeAppendedArgs: '-GNinja -DCMAKE_BUILD_TYPE=Release'
         buildWithCMakeArgs: '-- -v'
         buildDirectory: '${{ github.workspace }}/build/'
+    - name: run tests
+      run: |
+        cmake -H. -Bbuild -DCMAKE_INSTALL_PREFIX:PATH=/tmp/foo
+        cd build
+        cmake --build .
+        ctest
+        cmake --build . --target install
